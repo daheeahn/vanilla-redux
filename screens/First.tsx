@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -30,11 +30,24 @@ interface Props {
 }
 
 export default ({navigation}: Props) => {
+  const [count, setCount] = useState(0);
+
+  const handleAdd = () => {
+    setCount(c => c + 1);
+  };
+
+  const handleMinus = () => {
+    setCount(c => c - 1);
+  };
+
   return (
     <Container>
-      <Text>First</Text>
-      <Button onPress={() => navigation.navigate('Second')}>
-        <Text color="white">Go To Second</Text>
+      <Text>{count}</Text>
+      <Button onPress={handleAdd}>
+        <Text color="white">Plus +</Text>
+      </Button>
+      <Button onPress={handleMinus}>
+        <Text color="white">Minus -</Text>
       </Button>
     </Container>
   );
