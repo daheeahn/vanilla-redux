@@ -1,26 +1,47 @@
 import {createStore} from 'redux';
 
-export const ADD = 'ADD';
-export const MINUS = 'MINUS';
+export const ADD_TODO = 'ADD_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
 
-const countModifier = (count = 0, action) => {
-  // count는 current야. 항상 0이 아니야.
-  console.log(count, action);
+// actionCreator
+const addToDo = text => {
+  return {
+    type: ADD_TODO,
+    text,
+  };
+};
+
+const deleteToDo = id => {
+  return {
+    type: DELETE_TODO,
+    id,
+  };
+};
+
+const reducer = (state = [], action) => {
+  // state: currentState
   switch (action.type) {
-    case ADD:
-      return count + 1;
-    case MINUS:
-      return count + 1;
+    case ADD_TODO:
+      const newToDoObj = {text: action.text, id: Date.now()};
+      return [newToDoObj, ...state];
+    case DELETE_TODO:
+      const cleaned = state.filter(s => s.id !== action.id);
+      return cleaned;
     default:
-      return count;
+      return state;
   }
 };
 
-export const countStore = createStore(countModifier);
-
-const onChange = () => {
-  console.log(countStore.getState());
-  // 그 때마다 useState?로 해야하나... 어케 홈에서 바뀌게 하는데?
+export const store = createStore(reducer);
+export const actionCreators = {
+  addToDo,
+  deleteToDo,
 };
 
-countStore.subscribe(onChange);
+const dispatchAddToDo = (text: string): void => {
+  store.dispatch(addToDo(text));
+};
+
+const dispatchDeleteToDo = (id: number): void => {
+  store.dispatch(deleteToDo(id));
+};
