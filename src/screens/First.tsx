@@ -38,7 +38,7 @@ const TextInput = styled.TextInput`
 
 interface Props {
   navigation: StackNavigationProp<StackParamList, 'First'>;
-  state: ToDo[];
+  state: ToDoIF[];
   addToDo: any; // TODO:
   deleteToDo: any; // TODO:
 }
