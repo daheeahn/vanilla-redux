@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {StackParamList} from '../App';
+import {StackParamList} from '../../App';
+import {countStore, ADD, MINUS} from '../Store';
 
 const Container = styled.View`
   flex: 1;
@@ -30,14 +31,14 @@ interface Props {
 }
 
 export default ({navigation}: Props) => {
-  const [count, setCount] = useState(0);
+  const count = countStore.getState();
 
   const handleAdd = () => {
-    setCount(c => c + 1);
+    countStore.dispatch({type: ADD});
   };
 
   const handleMinus = () => {
-    setCount(c => c - 1);
+    countStore.dispatch({type: MINUS});
   };
 
   return (

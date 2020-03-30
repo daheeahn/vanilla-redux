@@ -7,8 +7,8 @@
  */
 
 import React from 'react';
-import First from './screens/First';
-import Second from './screens/Second';
+import First from './src/screens/First';
+import Second from './src/screens/Second';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
