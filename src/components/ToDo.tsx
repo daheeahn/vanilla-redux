@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {actionCreators} from '../store';
+import {actionCreators, deleteToDoAsync} from '../store';
 import {connect} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackParamList} from '../../App';
@@ -43,7 +43,7 @@ const ToDo = ({goToSecond, id, text, deleteToDo}: Props) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   // ownProps 아주 유용.
   return {
-    deleteToDo: () => dispatch(actionCreators.deleteToDo(ownProps.id)),
+    deleteToDo: () => dispatch(deleteToDoAsync(ownProps.id)),
   };
 };
 

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import {StackParamList} from '../../App';
 import {ToDoIF} from '../interface';
-import {actionCreators} from '../store';
+import {actionCreators, addToDoAsync} from '../store';
 import ToDo from '../components/ToDo';
 
 const Container = styled.View`
@@ -83,7 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   // ownProps 아주 유용.
   return {
-    addToDo: (text: string) => dispatch(actionCreators.addToDo(text)),
+    addToDo: (text: string) => dispatch(addToDoAsync(text)),
   };
 };
 

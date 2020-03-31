@@ -1,6 +1,8 @@
-import {createStore} from 'redux';
+import {Alert} from 'react-native';
+import {createStore, compose, applyMiddleware} from 'redux';
 import {createAction, createReducer} from '@reduxjs/toolkit';
-
+import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 // export const ADD_TODO = 'ADD_TODO';
 // export const DELETE_TODO = 'DELETE_TODO';
 
@@ -41,6 +43,7 @@ const deleteToDo = createAction('DELETE');
 const reducer = createReducer([], {
   // state mutate도 쉬워져.
   [addToDo]: (state, action) => {
+    console.log('😍', action);
     const newToDo = {text: action.payload, id: Date.now()};
     state.push(newToDo); // createReducer는 이렇게 mutate해도 괜찮다!!!
     // *** mutate, not return!!!!!!!! // 뭔가를 return할 땐 꼭 새로은 state여야 해. push하면 그냥 Mutate 될 뿐이지!
@@ -49,7 +52,34 @@ const reducer = createReducer([], {
     state.filter(toDo => toDo.id !== action.payload), // *** or return new state
 });
 
-export const store = createStore(reducer);
+export const addToDoAsync = text => {
+  return async (dispatch, getState) => {
+    try {
+      console.log('thunk addToDoAsync');
+      dispatch(actionCreators.addToDo(text));
+    } catch (e) {
+      Alert.alert('addToDoAsync error', JSON.stringify(e));
+    }
+  };
+};
+
+export const deleteToDoAsync = id => {
+  return async (dispatch, getState) => {
+    try {
+      console.log('thunk deleteToDoAsync');
+      dispatch(actionCreators.deleteToDo(id));
+    } catch (e) {
+      Alert.alert('addToDoAsync error', JSON.stringify(e));
+    }
+  };
+};
+
+export const store = createStore(
+  reducer,
+  // https://medium.com/encored-technologies-engineering-data-science/react-native-%EB%94%94%EB%B2%84%EA%B9%85-%ED%99%98%EA%B2%BD-%EB%A7%8C%EB%93%A4%EA%B8%B0-7e46bfe89f6
+  // 따라서 devtool 설치
+  composeWithDevTools(applyMiddleware(thunk)),
+);
 export const actionCreators = {
   addToDo,
   deleteToDo,
