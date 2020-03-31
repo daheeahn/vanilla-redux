@@ -1,11 +1,11 @@
 import {createStore} from 'redux';
 import {createAction} from '@reduxjs/toolkit';
 
-export const ADD_TODO = 'ADD_TODO';
-export const DELETE_TODO = 'DELETE_TODO';
+// export const ADD_TODO = 'ADD_TODO';
+// export const DELETE_TODO = 'DELETE_TODO';
 
-const addToDo = createAction(ADD_TODO);
-const deleteToDo = createAction(DELETE_TODO);
+const addToDo = createAction('ADD');
+const deleteToDo = createAction('DELETE');
 // console.log(addToDo(), deleteToDo);
 
 // actionCreator
